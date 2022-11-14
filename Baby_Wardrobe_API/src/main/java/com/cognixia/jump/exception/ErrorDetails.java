@@ -26,5 +26,4 @@ public class ErrorDetails {
 	public String getPath() {
 		return path;
 	}
-
 }

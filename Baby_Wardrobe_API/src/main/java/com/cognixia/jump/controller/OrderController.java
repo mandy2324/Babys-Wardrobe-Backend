@@ -6,7 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,52 +19,50 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.exception.DuplicateResourceException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
+import com.cognixia.jump.model.Order;
+import com.cognixia.jump.model.Purchaces;
 import com.cognixia.jump.model.User;
+import com.cognixia.jump.repository.OrderRepository;
 import com.cognixia.jump.repository.UserRepository;
-import com.cognixia.jump.service.UserService;
+import com.cognixia.jump.service.OrderService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api")
-@Tag(name = "user", description = "the API for managing users")
-public class UserController {
+@Tag(name = "order", description = "the API for managing orders")
+public class OrderController {
 
 	@Autowired
-	UserRepository repo;
+	OrderRepository repo;
 	
 	@Autowired
-	UserService service;
+	UserRepository repoU;
 	
 	@Autowired
-	PasswordEncoder encoder;
+	OrderService service;
 	
 	@Operation( summary = "Get all the users in the user table",
 			description = "Gets all the users from the user table in the "
 					+ "product_db database. Each user grabbed has an "
 					+ "id, username, password, email, role, and enabled for activating account.")
-	@GetMapping("/user")
-	public List<User> getUsers() throws ResourceNotFoundException {
-		
-		return service.getUsers();
+	@GetMapping("/order")
+	public List<Order> getOrders(@CurrentSecurityContext(expression="authentication?.credentials") String username) throws ResourceNotFoundException {
+		User user = repoU.findByUsername(username).get();
+		return service.getOrders(user);
 	}
 	
-	@PostMapping("/user")
-	public ResponseEntity<?> addUser(@Valid @RequestBody User user) throws MethodArgumentNotValidException, DuplicateResourceException {
-		
-		return service.addUser(user);
+	@PostMapping("/order")
+	public ResponseEntity<?> addOrder(@RequestParam String clothesId, @RequestParam int qty, @CurrentSecurityContext(expression="authentication?.credentials") String username) throws MethodArgumentNotValidException, ResourceNotFoundException {
+		User user = repoU.findByUsername(username).get();
+		return service.addOrder(user, clothesId, qty);
 	}
 	
-	@PutMapping("/user")
-	public ResponseEntity<?> updateUser(@Valid @RequestBody User user) throws MethodArgumentNotValidException, DuplicateResourceException {
-		
-		return service.updateUser(user);
-	}
-	
-	@DeleteMapping("/user")
-	public ResponseEntity<?> deleteUser(@RequestParam String id) throws ResourceNotFoundException {
-		
-		return service.deleteUser(id);
+	@DeleteMapping("/order")
+	public ResponseEntity<?> deleteUser(@CurrentSecurityContext(expression="authentication?.credentials") String username, @RequestParam String id) throws ResourceNotFoundException {
+		User user = repoU.findByUsername(username).get();
+		return service.deleteOrder(user, id);
 	}
 }
