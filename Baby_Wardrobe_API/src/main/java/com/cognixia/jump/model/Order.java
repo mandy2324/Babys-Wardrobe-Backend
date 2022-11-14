@@ -17,6 +17,9 @@ public class Order {
 	private String userId;
 	
 	@NotBlank
+	private String clothesId;
+	
+	@NotBlank
 	private List<Purchaces> purchaces;
 	
 	@NotBlank
@@ -26,10 +29,11 @@ public class Order {
 		
 	}
 
-	public Order(String id, @NotBlank String userId, @NotBlank List<Purchaces> purchaces, @NotBlank double price) {
+	public Order(String id, @NotBlank String userId, @NotBlank String clothesId, @NotBlank List<Purchaces> purchaces, @NotBlank double price) {
 		super();
 		this.id = id;
 		this.userId = userId;
+		this.clothesId = clothesId;
 		this.purchaces = purchaces;
 		this.price = price;
 	}
@@ -50,6 +54,14 @@ public class Order {
 		this.userId = userId;
 	}
 
+	public String getClothesId() {
+		return clothesId;
+	}
+
+	public void setClothesId(String clothesId) {
+		this.clothesId = clothesId;
+	}
+
 	public List<Purchaces> getPurchaces() {
 		return purchaces;
 	}
@@ -68,7 +80,8 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", purchaces=" + purchaces + ", price=" + price + "]";
+		return "Order [id=" + id + ", userId=" + userId + ", clothesId=" + clothesId + ", purchaces=" + purchaces
+				+ ", price=" + price + "]";
 	}
-	
+
 }
