@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,6 +24,7 @@ public class Order {
 	private List<Purchaces> purchaces;
 	
 	@NotBlank
+	@Range(min = 1)
 	private double price;
 	
 	public Order() {
