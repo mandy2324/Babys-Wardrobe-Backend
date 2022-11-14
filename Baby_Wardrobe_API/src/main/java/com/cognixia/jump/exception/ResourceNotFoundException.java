@@ -7,7 +7,7 @@ public class ResourceNotFoundException extends Exception {
 	public ResourceNotFoundException(String msg) {
 		super(msg);
 	}
-	
+
 	public ResourceNotFoundException(String resource, String id) {
 		super(resource + " was not found with id = " + id);
 	}
