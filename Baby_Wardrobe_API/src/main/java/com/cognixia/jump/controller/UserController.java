@@ -1,9 +1,12 @@
 package com.cognixia.jump.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +23,20 @@ public class UserController {
 	@Autowired
 	UserRepository repo;
 	
+	@Autowired
+	PasswordEncoder encoder;
 	
-	@PostMapping("/baby")
+	@GetMapping("/user")
+	public List<User> getUsers() {
+		return repo.findAll();
+	}
+	
+	@PostMapping("/user")
 	public ResponseEntity<?> addUser(@RequestBody User user) {
 		
+		user.setId(null);
+		user.setPassword(encoder.encode(user.getPassword()));
 		User created = repo.save(user);
-		created.setId(null);
 		
 		return ResponseEntity.status(201).body(created);
 	}
