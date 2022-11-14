@@ -3,13 +3,23 @@ package com.cognixia.jump.model;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Clothes {
 
+	public static enum gender{
+		Male, Female, Unisex
+	}
+	
+//	public static enum age{
+//		m0, m3, m6, m9, m12, m18, m24
+//	}
+	
 	@Id
 	private String id;
 	
@@ -20,22 +30,23 @@ public class Clothes {
 	private String type;
 	
 	@NotBlank
-	private char gender;
+	private String gender;
 	
 	@NotBlank
-	private int age;
+	private String age;
 	
 	@NotBlank
 	private List<String> color;
 	
 	@NotBlank
+	@Range(min = 1)
 	private double price;
 	
 	public Clothes() {
 		
 	}
 
-	public Clothes(String id, @NotBlank String name, @NotBlank String type, @NotBlank char gender, @NotBlank int age,
+	public Clothes(String id, @NotBlank String name, @NotBlank String type, @NotBlank String gender, @NotBlank String age,
 			@NotBlank List<String> color, @NotBlank double price) {
 		super();
 		this.id = id;
@@ -71,19 +82,19 @@ public class Clothes {
 		this.type = type;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public int getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 

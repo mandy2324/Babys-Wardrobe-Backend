@@ -1,6 +1,7 @@
 package com.cognixia.jump.model;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 public class Address {
 
@@ -10,10 +11,10 @@ public class Address {
 	@NotBlank
 	private String city;
 	
-	@NotBlank
+	@Pattern(regexp = "[A-Z]{2}$", message = "Must be 2 capital Letters")
 	private String state;
 	
-	@NotBlank
+	@Pattern(regexp = "[1-0]{5}$", message = "Must be 5 digits")
 	private String zip;
 
 	public Address() {
