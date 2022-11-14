@@ -12,4 +12,10 @@ public interface ClothesRepository extends MongoRepository<Clothes, String> {
 
 	List<Clothes> findByAge(int age);
 
+	List<Clothes> findByGender(String gender);
+
+	List<Clothes> findByType(String type);
+
+	List<Clothes> findByColorContaining(String color);
+
 }

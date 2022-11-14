@@ -41,14 +41,27 @@ public class ClothesService {
 
 		throw new ResourceNotFoundException("Clothes", clothes.getId());
 	}
-	
+
 	public Clothes deleteClothes(String id) throws ResourceNotFoundException {
 		Clothes toDelete = findClothesById(id);
 		repo.deleteById(id);
 		return toDelete;
 	}
-	
-	public List<Clothes> findByAge(int age){
+
+	public List<Clothes> findByAge(int age) {
 		return repo.findByAge(age);
 	}
+
+	public List<Clothes> findByGender(String gender) {
+		return repo.findByGender(gender);
+	}
+
+	public List<Clothes> findByType(String type) {
+		return repo.findByType(type);
+	}
+
+	public List<Clothes> findByColorContaining(String color) {
+		return repo.findByColorContaining(color);
+	}
+
 }
