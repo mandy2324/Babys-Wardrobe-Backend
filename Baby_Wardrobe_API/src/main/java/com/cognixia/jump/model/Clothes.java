@@ -3,7 +3,6 @@ package com.cognixia.jump.model;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
@@ -12,42 +11,38 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Clothes {
 
-	public static enum gender{
+	public static enum gender {
 		Male, Female, Unisex
 	}
-	
-//	public static enum age{
-//		m0, m3, m6, m9, m12, m18, m24
-//	}
-	
+
 	@Id
 	private String id;
-	
+
 	@NotBlank
 	private String name;
-	
+
 	@NotBlank
 	private String type;
-	
+
 	@NotBlank
 	private String gender;
-	
+
 	@NotBlank
 	private String age;
-	
+
 	@NotBlank
 	private List<String> color;
-	
+
 	@NotBlank
 	@Range(min = 1)
 	private double price;
-	
+
 	public Clothes() {
-		
+
 	}
 
-	public Clothes(String id, @NotBlank String name, @NotBlank String type, @NotBlank String gender, @NotBlank String age,
-			@NotBlank List<String> color, @NotBlank double price) {
+	public Clothes(String id, @NotBlank String name, @NotBlank String type, @NotBlank String gender,
+			@NotBlank String age, @NotBlank List<String> color, @NotBlank @Range(min = 1) double price) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -119,5 +114,5 @@ public class Clothes {
 		return "Clothes [id=" + id + ", name=" + name + ", type=" + type + ", gender=" + gender + ", age=" + age
 				+ ", color=" + color + ", price=" + price + "]";
 	}
-	
+
 }

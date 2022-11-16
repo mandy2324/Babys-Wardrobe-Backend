@@ -48,7 +48,7 @@ public class ClothesService {
 		return toDelete;
 	}
 
-	public List<Clothes> findByAge(int age) {
+	public List<Clothes> findByAge(String age) {
 		return repo.findByAge(age);
 	}
 

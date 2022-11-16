@@ -14,7 +14,7 @@ public class Address {
 	@Pattern(regexp = "[A-Z]{2}$", message = "Must be 2 capital Letters")
 	private String state;
 	
-	@Pattern(regexp = "[1-0]{5}$", message = "Must be 5 digits")
+	@Pattern(regexp = "[0-9]{5}$", message = "Must be 5 digits")
 	private String zip;
 
 	public Address() {

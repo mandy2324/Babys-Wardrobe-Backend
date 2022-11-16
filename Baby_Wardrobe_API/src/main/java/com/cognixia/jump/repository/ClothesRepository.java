@@ -10,7 +10,7 @@ import com.cognixia.jump.model.Clothes;
 @Repository
 public interface ClothesRepository extends MongoRepository<Clothes, String> {
 
-	List<Clothes> findByAge(int age);
+	List<Clothes> findByAge(String age);
 
 	List<Clothes> findByGender(String gender);
 
@@ -18,4 +18,5 @@ public interface ClothesRepository extends MongoRepository<Clothes, String> {
 
 	List<Clothes> findByColorContaining(String color);
 
+	List<Clothes> findByPriceBetween(int from, int to);
 }

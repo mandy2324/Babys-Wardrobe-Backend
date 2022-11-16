@@ -55,7 +55,7 @@ public class ClothesController {
 	}
 
 	@GetMapping("/clothes/age/{age}")
-	public List<Clothes> findByAge(@PathVariable int age) {
+	public List<Clothes> findByAge(@PathVariable String age) {
 		List<Clothes> found = service.findByAge(age);
 		return found;
 	}
