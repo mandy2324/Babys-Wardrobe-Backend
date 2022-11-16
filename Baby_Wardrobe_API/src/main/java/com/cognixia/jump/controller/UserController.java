@@ -33,38 +33,39 @@ public class UserController {
 
 	@Autowired
 	UserRepository repo;
-	
+
 	@Autowired
 	UserService service;
-	
+
 	@Autowired
 	PasswordEncoder encoder;
-	
-	@Operation( summary = "Get all the users in the user table",
-			description = "Gets all the users from the user table in the "
-					+ "product_db database. Each user grabbed has an "
-					+ "id, username, password, email, role, and enabled for activating account.")
+
+	@Operation(summary = "Get all the users in the user table", description = "Gets all the users from the user table in the "
+			+ "product_db database. Each user grabbed has an "
+			+ "id, username, password, email, role, and enabled for activating account.")
 	@GetMapping("/user")
 	public List<User> getUsers() throws ResourceNotFoundException {
-		
+
 		return service.getUsers();
 	}
-	
+
 	@PostMapping("/user")
-	public ResponseEntity<?> addUser(@Valid @RequestBody User user) throws MethodArgumentNotValidException, DuplicateResourceException {
-		
+	public ResponseEntity<?> addUser(@Valid @RequestBody User user)
+			throws MethodArgumentNotValidException, DuplicateResourceException {
+
 		return service.addUser(user);
 	}
-	
+
 	@PutMapping("/user")
-	public ResponseEntity<?> updateUser(@Valid @RequestBody User user) throws MethodArgumentNotValidException, DuplicateResourceException {
-		
+	public ResponseEntity<?> updateUser(@Valid @RequestBody User user)
+			throws MethodArgumentNotValidException, DuplicateResourceException {
+
 		return service.updateUser(user);
 	}
-	
+
 	@DeleteMapping("/user")
 	public ResponseEntity<?> deleteUser(@RequestParam String id) throws ResourceNotFoundException {
-		
+
 		return service.deleteUser(id);
 	}
 }

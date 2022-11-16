@@ -1,6 +1,7 @@
 package com.cognixia.jump.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,56 +21,54 @@ public class UserService {
 
 	@Autowired
 	UserRepository repo;
-	
+
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	public List<User> getUsers() throws ResourceNotFoundException {
-		
+
 		if (repo.count() == 0) {
-		
 			throw new ResourceNotFoundException("No Users were found");
 		}
 		return repo.findAll();
 	}
-	
+
 	public ResponseEntity<?> addUser(User user) throws DuplicateResourceException, MethodArgumentNotValidException {
-		
+
 		if (repo.findByUsername(user.getUsername()).isPresent()) {
-			
-			throw new DuplicateResourceException("User",user.getId());
+			throw new DuplicateResourceException("User", user.getId());
 		}
-		
+
 		user.setId(null);
 		user.setPassword(encoder.encode(user.getPassword()));
 		User created = repo.save(user);
-		
+
 		return ResponseEntity.status(201).body(created);
 	}
 
-	public ResponseEntity<?> updateUser(@Valid User user) throws DuplicateResourceException, MethodArgumentNotValidException {
-		
+	public ResponseEntity<?> updateUser(@Valid User user)
+			throws DuplicateResourceException, MethodArgumentNotValidException {
+
 		if (repo.findById(user.getId()).isPresent()) {
-			
-			throw new DuplicateResourceException("User",user.getId());
+			throw new DuplicateResourceException("User", user.getId());
 		}
 
 		user.setPassword(encoder.encode(user.getPassword()));
 		User updated = repo.save(user);
-		
+
 		return ResponseEntity.status(201).body(updated);
 	}
-	
+
 	public ResponseEntity<?> deleteUser(String id) throws ResourceNotFoundException {
-		
-		User found = repo.findById(id).get();
-		if (found == null) {
-			
+
+		Optional<User> found = repo.findById(id);
+
+		if (!found.isPresent()) {
 			throw new ResourceNotFoundException("User", id);
 		}
-		
-		repo.delete(found);
-		return ResponseEntity.status(201).body(found);
+
+		repo.delete(found.get());
+		return ResponseEntity.status(201).body(found.get());
 	}
 
 }
