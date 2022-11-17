@@ -4,39 +4,45 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Clothes {
 
-	@Id
-	private String id;
-	
-	@NotBlank
-	private String name;
-	
-	@NotBlank
-	private String type;
-	
-	@NotBlank
-	private char gender;
-	
-	@NotBlank
-	private int age;
-	
-	@NotBlank
-	private List<String> color;
-	
-	@NotBlank
-	private double price;
-	
-	public Clothes() {
-		
+	public static enum Gender {
+		MALE, FEMALE, UNISEX
 	}
 
-	public Clothes(String id, @NotBlank String name, @NotBlank String type, @NotBlank char gender, @NotBlank int age,
-			@NotBlank List<String> color, @NotBlank double price) {
+	@Id
+	private String id;
+
+	@NotBlank
+	private String name;
+
+	@NotBlank
+	private String type;
+
+	@NotBlank
+	private String gender;
+
+	@NotBlank
+	private String age;
+
+	@NotBlank
+	private List<String> color;
+
+	@NotBlank
+	@Range(min = 1)
+	private double price;
+
+	public Clothes() {
+
+	}
+
+	public Clothes(String id, @NotBlank String name, @NotBlank String type, @NotBlank String gender,
+			@NotBlank String age, @NotBlank List<String> color, @NotBlank @Range(min = 1) double price) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -71,19 +77,19 @@ public class Clothes {
 		this.type = type;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public int getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 
@@ -108,5 +114,5 @@ public class Clothes {
 		return "Clothes [id=" + id + ", name=" + name + ", type=" + type + ", gender=" + gender + ", age=" + age
 				+ ", color=" + color + ", price=" + price + "]";
 	}
-	
+
 }

@@ -2,7 +2,7 @@ package com.cognixia.jump.model;
 
 import javax.validation.constraints.NotBlank;
 
-public class Purchaces {
+public class Purchase {
 
 	@NotBlank
 	private String prod_id;
@@ -10,18 +10,14 @@ public class Purchaces {
 	@NotBlank
 	private int qty;
 	
-	@NotBlank
-	private double price;
-	
-	public Purchaces() {
+	public Purchase() {
 		
 	}
 
-	public Purchaces(@NotBlank String prod_id, @NotBlank int qty, @NotBlank double price) {
+	public Purchase(@NotBlank String prod_id, @NotBlank int qty) {
 		super();
 		this.prod_id = prod_id;
 		this.qty = qty;
-		this.price = price;
 	}
 
 	public String getProd_id() {
@@ -39,18 +35,10 @@ public class Purchaces {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
+	
 	@Override
 	public String toString() {
-		return "Purchaces [prod_id=" + prod_id + ", qty=" + qty + ", price=" + price + "]";
+		return "Purchaces [prod_id=" + prod_id + ", qty=" + qty + "]";
 	}
 	
 }
