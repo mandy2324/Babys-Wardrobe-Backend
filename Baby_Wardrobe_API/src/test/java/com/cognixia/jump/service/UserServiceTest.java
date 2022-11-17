@@ -15,13 +15,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Address;
-import com.cognixia.jump.model.Clothes;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.UserRepository;
 

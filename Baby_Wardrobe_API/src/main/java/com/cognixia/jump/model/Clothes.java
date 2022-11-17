@@ -11,8 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Clothes {
 
-	public static enum gender {
-		Male, Female, Unisex
+	public static enum Gender {
+		MALE, FEMALE, UNISEX
 	}
 
 	@Id

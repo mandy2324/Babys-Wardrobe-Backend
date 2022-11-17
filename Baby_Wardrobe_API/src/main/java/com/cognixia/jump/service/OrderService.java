@@ -11,7 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Clothes;
 import com.cognixia.jump.model.Order;
-import com.cognixia.jump.model.Purchaces;
+import com.cognixia.jump.model.Purchase;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.ClothesRepository;
 import com.cognixia.jump.repository.OrderRepository;
@@ -20,67 +20,66 @@ import com.cognixia.jump.repository.OrderRepository;
 public class OrderService {
 
 	@Autowired
-	OrderRepository repo;
-	
+	OrderRepository orderRepo;
+
 	@Autowired
-	ClothesRepository repoC;
+	ClothesRepository clothesRepo;
 
 	public List<Order> getOrders(User user) throws ResourceNotFoundException {
 
-		if (repo.findByUserId(user.getId()).isEmpty()) {
-			
+		if (orderRepo.findByUserId(user.getId()).isEmpty()) {
 			throw new ResourceNotFoundException("No Orders were found");
 		}
-		return repo.findAll();
+		return orderRepo.findAll();
 	}
 
-	public ResponseEntity<?> addOrder(User user, String clothesId, int qty) throws MethodArgumentNotValidException, ResourceNotFoundException {
-		
-		if (repoC.findById(clothesId).isEmpty()) {
-			
+	public ResponseEntity<?> addOrder(User user, String clothesId, int qty)
+			throws MethodArgumentNotValidException, ResourceNotFoundException {
+
+		if (clothesRepo.findById(clothesId).isEmpty()) {
 			throw new ResourceNotFoundException("Clothing", clothesId);
-		} 
-		
+		}
+
 		Order created = new Order();
 		Order entry = new Order();
-		
+
 		entry = newEntry(user, clothesId, qty);
-		
-		created = repo.save(entry);
-		
+
+		created = orderRepo.save(entry);
+
 		return ResponseEntity.status(201).body(created);
 	}
 
 	private Order newEntry(User user, String clothesId, int qty) {
 
-		Clothes clothing = repoC.findById(clothesId).get();
-		Order entry = new Order();				
-		Purchaces purchace = new Purchaces(clothesId, qty);
-		List<Purchaces> purchaces = new ArrayList();
-		purchaces.add(purchace);
+		Clothes clothing = clothesRepo.findById(clothesId).get();
+		Order entry = new Order();
+		Purchase purchase = new Purchase(clothesId, qty);
+		List<Purchase> purchases = new ArrayList();
+		purchases.add(purchase);
 
 		double price = 0;
 
-		price =  clothing.getPrice() * qty;
-		
+		price = clothing.getPrice() * qty;
+
 		entry.setId(null);
 		entry.setUserId(user.getId());
 		entry.setClothesId(clothesId);
-		entry.setPurchaces(purchaces);
+		entry.setPurchaces(purchases);
 		entry.setPrice(price);
-		
+
 		return entry;
 	}
 
 	public ResponseEntity<?> deleteOrder(User user, String id) throws ResourceNotFoundException {
-		
-		Order found = repo.findById(id).get();
-		
-		if(found == null) {
+
+		Order found = orderRepo.findById(id).get();
+
+		if (found == null) {
 			throw new ResourceNotFoundException("Order", id);
 		}
-		repo.deleteById(found.getId());
-		
+		orderRepo.deleteById(found.getId());
+
 		return ResponseEntity.status(201).body(found);
 	}
 }

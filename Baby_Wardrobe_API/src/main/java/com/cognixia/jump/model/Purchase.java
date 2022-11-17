@@ -2,7 +2,7 @@ package com.cognixia.jump.model;
 
 import javax.validation.constraints.NotBlank;
 
-public class Purchaces {
+public class Purchase {
 
 	@NotBlank
 	private String prod_id;
@@ -10,11 +10,11 @@ public class Purchaces {
 	@NotBlank
 	private int qty;
 	
-	public Purchaces() {
+	public Purchase() {
 		
 	}
 
-	public Purchaces(@NotBlank String prod_id, @NotBlank int qty) {
+	public Purchase(@NotBlank String prod_id, @NotBlank int qty) {
 		super();
 		this.prod_id = prod_id;
 		this.qty = qty;
